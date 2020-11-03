@@ -1,0 +1,41 @@
+<div class="col-4 offset-4">
+<h1> Crear Vino </h1>
+<%= form_with(model:wine, local:true) do |form| %>
+  <% if wine.errors.any?%>
+    <div id="error_explanation">
+      <h2><%= pluralize(wine.errors.count, "error")%> prohibited
+      this strain from being saved:</h2>
+
+      <ul>
+        <% wine.errors.full_messages.each do |message|%>
+        <li><%= message %></li>
+        <%end%>
+      <ul>
+    </div>
+<%end%>
+
+  <div class="form-group">
+    <%= form.label :name, class: "control-label" %>
+    <%= form.text_field :name, class: "form-control"%>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :price, class: "control-label" %>
+    <%= form.number_field :price , class: "form-control"%>
+  </div>
+
+  <div class="form-group">
+    <%= form.fields_for :assemblies do |assembly_form|%>
+      <%= assembly_form.label assembly_form.object.strain_name, class: "control-label"%>
+      <%= assembly_form.hidden_field :strain_id %>
+      <%= assembly_form.number_field :percentage, class: "form-control"%>
+
+    <% end%>
+  </div> 
+
+
+  <div class="actions">
+    <%= form.submit "Save", class: "btn btn-success"%>
+  </div>
+<%end%>
+</div>
